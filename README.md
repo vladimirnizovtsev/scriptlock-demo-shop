@@ -53,7 +53,11 @@ The payment fields are served in a cross-origin frame from `raw.githack.com`, wh
 3. Run the `scriptlock` workflow from the Actions tab, or wait for the schedule.
 4. The `drift` job fails and the job summary names the script, the host it came from and the script that pulled it in.
 
-Remove the line again and the next run is green.
+Remove the line again and the next run is green. The container is normally left clean, so the scheduled check here is green until somebody makes it otherwise.
+
+## The other checkout page
+
+[`checkout-extra.html`](checkout-extra.html) is the same checkout with one more tag on it, sitting in the markup instead of arriving through the container. It exists so that the walkthrough in [scriptlock's README](https://github.com/vladimirnizovtsev/scriptlock#start-here-a-real-run-step-by-step) has a page anybody can point at: approve against `checkout.html`, then scan `checkout-extra.html`, and the diff reports exactly one unapproved script. Nothing watches it on a schedule; the `drift` job watches `checkout.html`, which is the page this demo is about.
 
 ## What the red run actually said
 
