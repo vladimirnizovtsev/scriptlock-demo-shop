@@ -28,20 +28,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@11f465c1bb006de9b979b7d50cb28d329715fa80  # v0.2.0
+      - uses: vladimirnizovtsev/scriptlock@97372ac742fc47257542e6a598c5632f18f135e4  # v0.2.1
         with:
           profile: checkout
           mode: gate
-          version: "0.2.0"
+          version: "0.2.1"
 
   drift:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@11f465c1bb006de9b979b7d50cb28d329715fa80  # v0.2.0
+      - uses: vladimirnizovtsev/scriptlock@97372ac742fc47257542e6a598c5632f18f135e4  # v0.2.1
         with:
           profile: checkout
           mode: drift
-          version: "0.2.0"
+          version: "0.2.1"
           history: "true"
