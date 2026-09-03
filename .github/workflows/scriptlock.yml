@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@944c821  # pinned to a commit, as an action should be
+      - uses: vladimirnizovtsev/scriptlock@944c821b10b1fc5f228e5cae8e879a44e1d8ade2  # pinned to a commit, as an action should be
         with:
           profile: checkout
           mode: gate
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@944c821  # pinned to a commit, as an action should be
+      - uses: vladimirnizovtsev/scriptlock@944c821b10b1fc5f228e5cae8e879a44e1d8ade2  # pinned to a commit, as an action should be
         with:
           profile: checkout
           mode: drift
