@@ -28,20 +28,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@944c821b10b1fc5f228e5cae8e879a44e1d8ade2  # pinned to a commit, as an action should be
+      - uses: vladimirnizovtsev/scriptlock@11f465c1bb006de9b979b7d50cb28d329715fa80  # v0.2.0
         with:
           profile: checkout
           mode: gate
-          version: "0.1.0"
+          version: "0.1.0"  # bump to 0.2.0 once it is on npm
 
   drift:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: vladimirnizovtsev/scriptlock@944c821b10b1fc5f228e5cae8e879a44e1d8ade2  # pinned to a commit, as an action should be
+      - uses: vladimirnizovtsev/scriptlock@11f465c1bb006de9b979b7d50cb28d329715fa80  # v0.2.0
         with:
           profile: checkout
           mode: drift
-          version: "0.1.0"
+          version: "0.1.0"  # bump to 0.2.0 once it is on npm
           history: "true"
