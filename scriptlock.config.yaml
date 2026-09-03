@@ -14,14 +14,14 @@ identity:
   collapseHashes: true
 
 scope:
-  # The demo's payment fields are served from raw.githack.com, standing in for a
+  # The demo's payment fields are served from rawcdn.githack.com, standing in for a
   # payment provider. Marking the host here puts the scripts inside that frame in
   # "tpsp" scope: they are recorded and shown in the inventory, but the deploy gate
   # does not fail on them, because under the PCI SSC responsibility split the
   # provider owns what runs inside its own frame (March 2025 information
   # supplement, Table 3). Everything on the page around the frame is ours.
   tpsp:
-    - raw.githack.com
+    - rawcdn.githack.com
   threeds: []
 
 integrity:

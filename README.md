@@ -17,10 +17,13 @@ Three origins, on purpose, because that is how a real checkout is assembled:
 | What | Where it lives | Who can change it |
 |---|---|---|
 | The storefront and the checkout page | this repository, deployed to GitHub Pages | anyone with a reviewed pull request |
-| The tag container | a [gist](https://gist.github.com/vladimirnizovtsev/de3fd2faa86adecc666ed56b23479b00), served from `gistcdn.githack.com` | anyone with the web interface open, in about ten seconds |
-| The vendor tags | [scriptlock-demo-tags](https://github.com/vladimirnizovtsev/scriptlock-demo-tags), served from `cdn.jsdelivr.net` | the vendor |
+| The tag container | [scriptlock-demo-tags](https://github.com/vladimirnizovtsev/scriptlock-demo-tags/blob/main/container.js), published on its own | whoever owns the tag manager, without touching this repository |
+| The vendor tags | the same tags repository, served from `cdn.jsdelivr.net` | the vendor |
+| The payment fields | a cross-origin frame on `rawcdn.githack.com` | the payment provider |
 
-The container stands in for a tag manager. Editing it touches neither this repository nor the deployed site: the page fetches whatever the container says, on every load.
+The container stands in for a tag manager: a separate system, with its own publish flow, that decides what runs on your pages. Changing it touches nothing here. This repository, its pull requests, its CI and its deploy all stand still while the checkout page starts executing something new.
+
+One honest caveat about the demo rig: the container is served from the same GitHub Pages host as the storefront, because that host invalidates its cache predictably and the demo has to be reproducible. In a real deployment the container comes from the tag manager's own domain. Nothing else about the demonstration depends on that: the script that appears is loaded from a genuinely third-party CDN, and the manifest treats the container as third-party code by policy rather than by hostname.
 
 The vendor tags are fictional and collect nothing: an analytics script that loads a second file of its own, a chat widget that loads its runtime, an A/B script that rewrites the headline, and a payment provider stand-in served in a cross-origin frame.
 
@@ -40,13 +43,13 @@ The payment fields are served in a cross-origin frame from `raw.githack.com`, wh
 
 ## Reproducing the red check
 
-1. Open the [container gist](https://gist.github.com/vladimirnizovtsev/de3fd2faa86adecc666ed56b23479b00) and add one line to the `TAGS` array:
+1. Open [`container.js`](https://github.com/vladimirnizovtsev/scriptlock-demo-tags/blob/main/container.js) in the tags repository and add one line to the `TAGS` array:
 
    ```js
    'https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/audience-pixel.js'
    ```
 
-2. Save the gist. Do not touch this repository.
+2. Save it. Do not touch this repository.
 3. Run the `scriptlock` workflow from the Actions tab, or wait for the schedule.
 4. The `drift` job fails and the job summary names the script, the host it came from and the script that pulled it in.
 
