@@ -55,6 +55,31 @@ The payment fields are served in a cross-origin frame from `raw.githack.com`, wh
 
 Remove the line again and the next run is green.
 
+## What the red run actually said
+
+Run [#5](https://github.com/vladimirnizovtsev/scriptlock-demo-shop/actions/runs/33719635764) of the `drift` job, after one line was added to the container and nothing else anywhere:
+
+```
+FAIL (1)
+  new            https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/audience-pixel.js [merchant]
+                 unapproved external script in merchant scope (JSDelivr CDN), loaded by
+                 https://vladimirnizovtsev.github.io/scriptlock-demo-tags/container.js
+
+INFO (1)
+  changed        https://vladimirnizovtsev.github.io/scriptlock-demo-tags/container.js [merchant]
+                 body changed under track policy (informational): 5523efa46248 -> f7708b31366e
+
+summary: 1 fail, 0 warn, 1 info; exit code 1 (findings at fail severity)
+```
+
+Three things in that output are the reason the tool exists.
+
+It names the script, not just the fact that something changed. It says which scope it ran in, so a script inside the payment provider's frame would not have been treated the same way. And it says **what loaded it**: the container, by name. The person reading the failed check does not have to guess where to look, and the fix is either to remove the tag or to add it to the manifest with an owner and a written justification, in a pull request somebody approves.
+
+The informational line underneath is the container itself: its body changed, which is expected, so it is recorded and not failed. That is the `track` policy doing its job, and it is why the manifest treats vendor code differently from first-party code.
+
+The run also uploads `.scriptlock/` as an artifact: the snapshot, the diff and the history index. That is the evidence a scheduled check has to leave behind if anyone is ever going to ask what it saw and when.
+
 ## Honest notes
 
 The vendor scripts here are fictional and harmless. A real skimmer in that position would read the payment fields, and would be no more visible in this repository than the pixel is.
