@@ -32,7 +32,7 @@ jobs:
         with:
           profile: checkout
           mode: gate
-          version: "0.1.0"  # bump to 0.2.0 once it is on npm
+          version: "0.2.0"
 
   drift:
     if: github.event_name != 'pull_request'
@@ -43,5 +43,5 @@ jobs:
         with:
           profile: checkout
           mode: drift
-          version: "0.1.0"  # bump to 0.2.0 once it is on npm
+          version: "0.2.0"
           history: "true"
