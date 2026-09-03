@@ -1,0 +1,124 @@
+version: 1
+profile: checkout
+url: https://vladimirnizovtsev.github.io/scriptlock-demo-shop/checkout.html
+headers:
+  policy: strict
+  values:
+    strict-transport-security: max-age=31556952
+frames:
+  - match: https://raw.githack.com/vladimirnizovtsev/scriptlock-demo-tags/main/payment-frame.html
+    scope: tpsp
+    owner: payments
+    justification: Payment provider frame holding the card fields; the provider owns what runs inside it under the PCI SSC responsibility split (March 2025 supplement, Table 3)
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+scripts:
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/ab.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: a9080c53f1b7768320dd5a8e6c9b544843e719d629a1d0064d8490723cae55d8
+    structuralHash: 8d256b3b20778cd85bf6e1b1a786d67ca88f97bdc9ca50c09f2c7aa1529a4116
+    owner: growth
+    category: ab-testing
+    justification: Prism Experiments headline test; rewrites copy only, reviewed 2026-08
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/analytics-session.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: 21cd3b4845dfecbc3a19dd2b011b57bf63eff6700c76c8ac7d2afee465cfaa8f
+    structuralHash: cdc4630c178a81baeca520d4773528f1281c32470342e00639b9852468fa786a
+    owner: marketing
+    category: analytics
+    justification: Meridian Analytics, page and session measurement; contract review 2026-08, no access to payment fields
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/analytics.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: 92368088fba01556abc51690666835ee9fc7fc5223a1333188652bd956d95e0b
+    structuralHash: f9b8d24d9edac6d7f0d3e40da8438e314f4032cf42f8607709a5c0123467a7ed
+    owner: marketing
+    category: analytics
+    justification: Meridian Analytics, page and session measurement; contract review 2026-08, no access to payment fields
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/chat-widget.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: 63b460bbe4cb79891a9cd14eb31276670779584d80aaab90495706dcb03d28eb
+    structuralHash: 45f379107369142ed4c0566d1d42d2532829d17cc204ddd0e398c94e585574c1
+    owner: support
+    category: customer-success
+    justification: Halcyon Chat support widget requested by the support team; loader plus its runtime
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/chat.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: 82c41a0ad8222c9a725bd4c0f78e0d86657f32208a568b9820f56056d847a8a7
+    structuralHash: 0101bd41a0542b86b1a7c39b2bb24d3b30b4e503e5220eda29f9ad8ed7165c57
+    owner: support
+    category: customer-success
+    justification: Halcyon Chat support widget requested by the support team; loader plus its runtime
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://gistcdn.githack.com/vladimirnizovtsev/[hash]/raw/container.js
+    kind: external
+    scope: merchant
+    integrity: track
+    integrityMethod: source-tracked
+    sha256: 5523efa46248bf0c3b794bfb8dcceb5e7be464c0078d3bb7a9cab984d1d56140
+    structuralHash: 2915f23f942a4d4531b3d572aa5131596ceb2e7e7dae34d55cbdff9acfbfbff8
+    owner: marketing
+    category: tag-manager
+    justification: Meridian tag container; the marketing team owns its contents, which is why every script it loads is inventoried separately below
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://vladimirnizovtsev.github.io/scriptlock-demo-shop/assets/checkout.js
+    kind: external
+    scope: merchant
+    integrity: strict
+    integrityMethod: hash-strict
+    sha256: 84fea71a3614a5e1d128ad3f2a967695c053d0043dbcae789502d85d1eddedba
+    structuralHash: d0723093423789e75300ff17bfea387b934e1a6afa148ef17a08a4585e3f0f4e
+    owner: web
+    category: functional
+    justification: First-party checkout bundle built from this repository; renders the order summary and never touches the payment frame
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: inline:https://vladimirnizovtsev.github.io:fe91f7e7eb3effdf
+    kind: inline
+    scope: merchant
+    integrity: structural
+    integrityMethod: hash-strict
+    sha256: b187cba3cc88962ad71ba7b5e9d07f13655dd826852506d85ef56c85f6d960c8
+    structuralHash: fe91f7e7eb3effdfe0388cca28a08c21a671b9cd2fae4be0ce56c10d49cf411c
+    owner: web
+    category: functional
+    justification: First-party inline dataLayer initialisation on the checkout page, reviewed in this repository
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+  - id: https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/payment-frame.js
+    kind: external
+    scope: tpsp
+    integrity: track
+    integrityMethod: vendor-attested
+    sha256: 39e0245050ea2eb24108111275732feb9f7237ef590183d12972b26c6f43e95b
+    structuralHash: 47722987c24ffec5f218fc012ab6518a537bf1b8389dd85ce9836a70683f9f59
+    owner: payments
+    category: payment
+    justification: Runs inside the payment provider frame; the provider owns its contents under the PCI SSC responsibility split
+    approvedBy: v.nizovtsev
+    approvedAt: 2026-09-03
+ignore: []

@@ -1,0 +1,61 @@
+# Bramble & Fig, a demo storefront for scriptlock
+
+Bramble & Fig is a fictional coffee shop. Nothing is for sale, the payment fields are disabled, no payment can be made and no data is collected. The shop exists to show one thing that is hard to demonstrate any other way:
+
+**a script appears on the checkout page, and not one line changes in this repository.**
+
+That is the everyday case. Marketing adds a pixel through the tag manager. The tag manager pushes it to the container. The container loads it on every page, including the one with the payment fields. There is no commit, no pull request, no deploy and nothing to review. The next time anyone looks at the repository, it says exactly what it said yesterday.
+
+- Storefront: <https://vladimirnizovtsev.github.io/scriptlock-demo-shop/>
+- The watched page: <https://vladimirnizovtsev.github.io/scriptlock-demo-shop/checkout.html>
+- The tool: <https://github.com/vladimirnizovtsev/scriptlock>
+
+## How it is wired
+
+Three origins, on purpose, because that is how a real checkout is assembled:
+
+| What | Where it lives | Who can change it |
+|---|---|---|
+| The storefront and the checkout page | this repository, deployed to GitHub Pages | anyone with a reviewed pull request |
+| The tag container | a [gist](https://gist.github.com/vladimirnizovtsev/de3fd2faa86adecc666ed56b23479b00), served from `gistcdn.githack.com` | anyone with the web interface open, in about ten seconds |
+| The vendor tags | [scriptlock-demo-tags](https://github.com/vladimirnizovtsev/scriptlock-demo-tags), served from `cdn.jsdelivr.net` | the vendor |
+
+The container stands in for a tag manager. Editing it touches neither this repository nor the deployed site: the page fetches whatever the container says, on every load.
+
+The vendor tags are fictional and collect nothing: an analytics script that loads a second file of its own, a chat widget that loads its runtime, an A/B script that rewrites the headline, and a payment provider stand-in served in a cross-origin frame.
+
+## What the check does
+
+[`.github/workflows/scriptlock.yml`](.github/workflows/scriptlock.yml) runs two jobs, and the difference between them is the point.
+
+`gate` runs on every pull request. It catches a script that a change in this repository would add, before it ships.
+
+`drift` runs on a schedule and on demand. It catches a script that appeared on the deployed page while this repository stood still. That is the job that goes red in the demo.
+
+Both compare a live scan against [`scriptlock.lock.yaml`](scriptlock.lock.yaml), which is reviewed here like any other file. Every entry carries an owner, a category, a written justification, who approved it and when.
+
+## The scope model, visible in the manifest
+
+The payment fields are served in a cross-origin frame from `raw.githack.com`, which [`scriptlock.config.yaml`](scriptlock.config.yaml) marks as a payment provider. Scripts inside that frame get `tpsp` scope: they are inventoried and shown, but the deploy gate does not fail on them, because under the PCI SSC responsibility split the provider owns what runs inside its own frame and the merchant owns the page around it (March 2025 information supplement, Table 3). Everything on the page outside that frame is `merchant` scope and is gated.
+
+## Reproducing the red check
+
+1. Open the [container gist](https://gist.github.com/vladimirnizovtsev/de3fd2faa86adecc666ed56b23479b00) and add one line to the `TAGS` array:
+
+   ```js
+   'https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/audience-pixel.js'
+   ```
+
+2. Save the gist. Do not touch this repository.
+3. Run the `scriptlock` workflow from the Actions tab, or wait for the schedule.
+4. The `drift` job fails and the job summary names the script, the host it came from and the script that pulled it in.
+
+Remove the line again and the next run is green.
+
+## Honest notes
+
+The vendor scripts here are fictional and harmless. A real skimmer in that position would read the payment fields, and would be no more visible in this repository than the pixel is.
+
+A scheduled scan is a sample, not a guarantee: there is a window between runs, and a script that hides from automation will not be in the inventory. scriptlock states this in its own README and so does this demo.
+
+Apache-2.0. Bramble & Fig is fictional and is not a real business.
