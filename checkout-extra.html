@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout after a tag was added - Bramble &amp; Fig (demo)</title>
+<link rel="stylesheet" href="assets/shop.css">
+<script>
+  // First-party inline configuration, reviewed in this repository.
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'checkout_view', step: 'payment', currency: 'EUR' });
+</script>
+<script src="https://vladimirnizovtsev.github.io/scriptlock-demo-tags/container.js" async></script>
+</head>
+<body>
+<div class="demo-banner">
+  Demo checkout. The payment fields are disabled, no payment can be made and nothing is collected. Never enter real card details anywhere.
+</div>
+<header>
+  <div class="bar">
+    <div class="brand">Bramble &amp; <span>Fig</span></div>
+    <nav><a href="index.html">Coffee</a><a href="checkout.html">Checkout</a></nav>
+  </div>
+</header>
+<main>
+  <h1>Checkout</h1>
+  <p class="lede">This is the page <code>scriptlock</code> watches.</p>
+  <div class="panel">
+    <h2 style="margin-top:0">Order</h2>
+    <div data-summary></div>
+    <h2>Contact</h2>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com" autocomplete="off">
+    </div>
+    <h2>Payment</h2>
+    <iframe title="Payment fields (demo stand-in)"
+            src="https://rawcdn.githack.com/vladimirnizovtsev/scriptlock-demo-tags/main/payment-frame.html"></iframe>
+    <button class="pay" type="button" disabled>Pay 26.50 EUR (disabled in the demo)</button>
+  </div>
+</main>
+<footer>Bramble &amp; Fig is fictional. Demo for <a href="https://github.com/vladimirnizovtsev/scriptlock">scriptlock</a>.</footer>
+<script src="assets/checkout.js"></script>
+<!-- The same checkout page, plus one advertising tag. It stands in for the state of
+     checkout.html after somebody adds a pixel to the tag container: scan this URL with a
+     manifest approved against checkout.html and scriptlock reports exactly one new script. -->
+<script src="https://cdn.jsdelivr.net/gh/vladimirnizovtsev/scriptlock-demo-tags@main/audience-pixel.js" async></script>
+</body>
+</html>
