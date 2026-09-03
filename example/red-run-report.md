@@ -1,7 +1,7 @@
 ## Scriptlock diff: checkout (drift)
 
 URL: https://vladimirnizovtsev.github.io/scriptlock-demo-shop/checkout.html  
-Scanned: 2026-09-03T05:38:12.174Z  
+Scanned: 2026-09-03T06:35:46.425Z  
 Scripts: 10 observed (9 merchant), 9 approved
 
 **Result: 1 fail, 0 warn, 1 info; exit code 1 (findings at fail severity).**

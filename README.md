@@ -57,7 +57,7 @@ Remove the line again and the next run is green.
 
 ## What the red run actually said
 
-Run [#5](https://github.com/vladimirnizovtsev/scriptlock-demo-shop/actions/runs/33719635764) of the `drift` job, after one line was added to the container and nothing else anywhere:
+Run [#7](https://github.com/vladimirnizovtsev/scriptlock-demo-shop/actions/runs/33723895231) of the `drift` job, after one line was added to the container and nothing else anywhere:
 
 ```
 FAIL (1)
