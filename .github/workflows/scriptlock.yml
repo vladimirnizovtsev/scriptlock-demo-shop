@@ -1,0 +1,47 @@
+name: scriptlock
+
+# Two jobs, and the difference between them is the whole point of the demo.
+#
+# gate  runs on every pull request. It catches a script that a change in this
+#       repository would add to the checkout page, before it is deployed.
+#
+# drift runs on a schedule and on demand. It catches a script that appeared on
+#       the deployed page without anything in this repository changing, which
+#       is what happens when somebody adds a tag through a tag manager.
+#
+# Requirement 11.6.1 asks for detection at least once every seven days, or at a
+# frequency justified by a targeted risk analysis under 12.3.1. The schedule
+# below is more frequent than that because this is a demo.
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: vladimirnizovtsev/scriptlock@v0.1.0
+        with:
+          profile: checkout
+          mode: gate
+          version: "0.1.0"
+
+  drift:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: vladimirnizovtsev/scriptlock@v0.1.0
+        with:
+          profile: checkout
+          mode: drift
+          version: "0.1.0"
+          history: "true"

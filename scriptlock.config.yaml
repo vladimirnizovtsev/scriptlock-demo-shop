@@ -1,0 +1,40 @@
+# scriptlock configuration for the Bramble & Fig demo storefront.
+# https://github.com/vladimirnizovtsev/scriptlock
+version: 1
+
+browser:
+  channel: chromium
+  headless: true
+  viewport: { width: 1366, height: 900 }
+  timeoutMs: 30000
+
+identity:
+  stripQuery: []
+  keepQuery: []
+  collapseHashes: true
+
+scope:
+  # The demo's payment fields are served from raw.githack.com, standing in for a
+  # payment provider. Marking the host here puts the scripts inside that frame in
+  # "tpsp" scope: they are recorded and shown in the inventory, but the deploy gate
+  # does not fail on them, because under the PCI SSC responsibility split the
+  # provider owns what runs inside its own frame (March 2025 information
+  # supplement, Table 3). Everything on the page around the frame is ours.
+  tpsp:
+    - raw.githack.com
+  threeds: []
+
+integrity:
+  firstParty: strict      # our own bundle: any change to the body must be approved
+  thirdParty: track       # vendor scripts change on their own schedule; record, do not fail
+  inline: structural
+  eval: structural
+
+profiles:
+  checkout:
+    url: https://vladimirnizovtsev.github.io/scriptlock-demo-shop/checkout.html
+    wait: load
+    settleMs: 4000
+    runs: 2               # the tag container loads asynchronously; union two runs
+    history: true
+    manifest: scriptlock.lock.yaml

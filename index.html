@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bramble &amp; Fig - demo storefront for scriptlock</title>
+<link rel="stylesheet" href="assets/shop.css">
+</head>
+<body>
+<div class="demo-banner">
+  Fictional shop. Nothing is for sale, no payment can be made and no data is collected. It exists to demonstrate
+  <a href="https://github.com/vladimirnizovtsev/scriptlock">scriptlock</a>.
+</div>
+<header>
+  <div class="bar">
+    <div class="brand">Bramble &amp; <span>Fig</span></div>
+    <nav><a href="index.html">Coffee</a><a href="checkout.html">Checkout</a></nav>
+    <div style="margin-left:auto;color:#6b645c;font-size:14px">Cart: <b data-cart-count>0</b></div>
+  </div>
+</header>
+<main>
+  <h1 data-experiment="headline">Coffee roasted last Tuesday</h1>
+  <p class="lede">A demo storefront. The interesting part is not the coffee, it is what runs on the checkout page.</p>
+  <div class="grid">
+    <div class="card"><h3>Ethiopia Guji</h3><p class="price">14.50 EUR</p><p>Peach, jasmine, black tea. 250 g.</p><a href="#" data-add>Add to cart</a></div>
+    <div class="card"><h3>Colombia Huila</h3><p class="price">12.00 EUR</p><p>Cocoa, red apple, cane sugar. 250 g.</p><a href="#" data-add>Add to cart</a></div>
+    <div class="card"><h3>Kenya Nyeri</h3><p class="price">16.00 EUR</p><p>Blackcurrant, tomato, grapefruit. 250 g.</p><a href="#" data-add>Add to cart</a></div>
+  </div>
+  <h2>What this demo shows</h2>
+  <p>The <a href="checkout.html">checkout page</a> loads a tag container that lives outside this repository. A scheduled
+  job runs <code>scriptlock diff --drift</code> against the deployed page and compares it with
+  <code>scriptlock.lock.yaml</code>, which is reviewed here like any other file.</p>
+</main>
+<footer>Bramble &amp; Fig is fictional. Demo for <a href="https://github.com/vladimirnizovtsev/scriptlock">scriptlock</a>.</footer>
+<script src="assets/storefront.js"></script>
+</body>
+</html>
